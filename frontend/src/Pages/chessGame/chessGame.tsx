@@ -5,7 +5,7 @@ import BoardSquare from '../../components/BoardSquare/BoardSquare';
 
 const ChessGame = () => {
   const [board, setBoard] = useState([]);
-  const [isGameOver, setIsGameOver] = useState();
+  const [isGameOver, setIsGameOver] = useState(false);
   const [result, setResult] = useState();
   const [turn, setTurn] = useState();
   const [currentBoard, setCurrentBoard] = useState([]);

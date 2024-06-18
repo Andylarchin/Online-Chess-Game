@@ -1,7 +1,7 @@
 import { Chess } from 'chess.js';
 import { BehaviorSubject } from 'rxjs';
 
-const chess: Chess = new Chess(`4k3/4P3/4K3/8/8/8/8/8 b - - 0 78`);
+const chess: Chess = new Chess();
 
 export const gameSubject = new BehaviorSubject();
 
@@ -58,6 +58,7 @@ const getGameResult = () => {
 
 export const initGame = () => {
   updateGame();
+  chess.reset();
 };
 
 export const move = (from, to, promotion) => {
