@@ -1,0 +1,104 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.plainLogo {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.gameLogo {
+  width: 35px;
+  height: 35px;
+}
+
+.headerContainer {
+  height: 100%;
+  justify-content: flex-start;
+  gap: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #222222;
+  width: 22%;
+}
+
+.userText {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 15px;
+  color: white;
+  margin-bottom: 30px;
+  margin-top: 30px;
+}
+
+body {
+  background-color: #302e2b;
+  font-family: 'Inter';
+}
+
+.game-buttons-container {
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.gameButton {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  width: 240px;
+  height: 60px;
+  background-color: #262522;
+  box-shadow: 0 0.5rem 0 0 rgba(0, 0, 0, 0.4);
+  border-radius: 0.5rem;
+  color: white;
+}
+
+.mainContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+.imagePanel img {
+  flex-shrink: 0;
+  min-width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.imagePanel {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.statsPanel {
+  width: 100%;
+  height: 100%;
+  background: white;
+}
+
+.statsHeader {
+  width: 100%;
+  height: 150px;
+  display: flex;
+  flex-direction: row;
+  margin: 25px;
+}
+
+.statsHeader ul {
+  list-style-type: none;
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+}

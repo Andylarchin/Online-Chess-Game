@@ -4,6 +4,8 @@ import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 
+type Call = {};
+
 const Login = () => {
   const {
     register,
