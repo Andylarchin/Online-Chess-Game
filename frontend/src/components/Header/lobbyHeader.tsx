@@ -17,8 +17,11 @@ import {
   LeftOutlined,
   SearchOutlined,
   DownOutlined,
+  ClockCircleOutlined,
 } from '@ant-design/icons';
 import { IoExtensionPuzzleOutline } from 'react-icons/io5';
+import { FaBoltLightning } from 'react-icons/fa6';
+import { RxRocket } from 'react-icons/rx';
 
 const Header = () => {
   const navigate = useNavigate();
@@ -122,76 +125,92 @@ const Header = () => {
               </div>
             </div>
             <div className='imageStats'>
-              <div className='statsBlock'>
-                <div className='topStats'>
-                  <p>Ranking Speed</p>
-                  <p>603</p>
-                  <DownOutlined />
-                  <MoreOutlined />
-                </div>
-                <img
-                  src='src\components\Header\image1.png'
-                  style={{ width: '100%', height: '40%' }}
+              <h2>Current Games:</h2>
+              <ul className='boardArguments'>
+                <li>Game Type</li>
+                <li>Player</li>
+                <li>Possible Win</li>
+                <li>Rank</li>
+                <li>Date</li>
+              </ul>
+              <div className='gameLobbyBoard'>
+                <ClockCircleOutlined
+                  style={{
+                    marginLeft: '1em',
+                    color: '#81B34A',
+                    fontSize: '30px',
+                  }}
                 />
-                <div className='gameStats'>
-                  <div className='statsDiv'>
-                    <p>Highest</p>
-                    <p>611</p>
-                  </div>
-                  <div className='statsDiv'>
-                    <p>Games</p>
-                    <p>289</p>
-                  </div>
-                  <div className='statsDiv'>
-                    <p>W/D/L</p>
-                    <p>177/20/34</p>
-                  </div>
+                <p>Chess Player Two</p>
+                <div className='reward'>
+                  <p>+21 MMR</p>
                 </div>
+                <p>Grand Master</p>
+                <p>06/21/2024</p>
+                <button
+                  className='playButton'
+                  style={{
+                    marginRight: '3%',
+                    width: '100px',
+                    height: '40px',
+                    border: 'none',
+                  }}
+                >
+                  Play <PlayCircleOutlined />
+                </button>
               </div>
-              <div className='statsBlock'>
-                <div className='topStats'>
-                  <p>Ranking Speed</p>
-                  <p>603</p>
-                  <DownOutlined />
-                  <MoreOutlined />
-                </div>
-                <img
-                  src='src\components\Header\image.png'
-                  style={{ width: '100%', height: '40%' }}
+
+              <div className='gameLobbyBoard'>
+                <RxRocket
+                  style={{
+                    marginLeft: '1em',
+                    color: '#604CC3',
+                    fontSize: '30px',
+                  }}
                 />
-                <div className='gameStats'>
-                  <ul>
-                    <li>Won</li>
-                    <li>Drawn</li>
-                    <li>Lost</li>
-                  </ul>
+                <p>Chess Player Two</p>
+                <div className='reward'>
+                  <p>+21 MMR</p>
                 </div>
+                <p>Grand Master</p>
+                <p>06/21/2024</p>
+                <button
+                  className='playButton'
+                  style={{
+                    marginRight: '3%',
+                    width: '100px',
+                    height: '40px',
+                    border: 'none',
+                  }}
+                >
+                  Play <PlayCircleOutlined />
+                </button>
               </div>
-              <div className='statsBlock'>
-                <div className='topStats'>
-                  <p>Ranking Speed</p>
-                  <p>603</p>
-                  <DownOutlined />
-                  <MoreOutlined />
-                </div>
-                <img
-                  src='src\components\Header\image1.png'
-                  style={{ width: '100%', height: '40%' }}
+              <div className='gameLobbyBoard'>
+                <FaBoltLightning
+                  style={{
+                    marginLeft: '1em',
+                    color: '#F2CF52',
+                    fontSize: '30px',
+                  }}
                 />
-                <div className='gameStats'>
-                  <div className='statsDiv'>
-                    <p>Highest</p>
-                    <p>611</p>
-                  </div>
-                  <div className='statsDiv'>
-                    <p>Games</p>
-                    <p>289</p>
-                  </div>
-                  <div className='statsDiv'>
-                    <p>W/D/L</p>
-                    <p>177/20/34</p>
-                  </div>
+                <p>Chess Player Two</p>
+                <div className='reward'>
+                  <p>+21 MMR</p>
                 </div>
+                <p>Grand Master</p>
+                <p>06/21/2024</p>
+                <button
+                  className='playButton'
+                  style={{
+                    marginRight: '3%',
+                    width: '100px',
+                    height: '40px',
+                    border: 'none',
+                  }}
+                >
+                  Play <PlayCircleOutlined />
+                </button>
               </div>
             </div>
           </div>

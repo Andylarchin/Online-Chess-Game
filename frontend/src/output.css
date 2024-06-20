@@ -1,4 +1,4 @@
-/* /*
+/*
 ! tailwindcss v3.4.4 | MIT License | https://tailwindcss.com
 */
 
@@ -323,6 +323,10 @@ summary {
   display: list-item;
 }
 
+::placeholder {
+  color: white;
+}
+
 /*
 Removes the default spacing and border for appropriate elements.
 */
@@ -607,7 +611,7 @@ video {
   cursor: pointer;
 } */
 
-/* html,
+html,
 body,
 #app,
 #app,
@@ -618,4 +622,4 @@ body,
   font-optical-sizing: auto;
   font-style: normal;
   font-variation-settings: 'slnt' 0;
-/* } */
+}

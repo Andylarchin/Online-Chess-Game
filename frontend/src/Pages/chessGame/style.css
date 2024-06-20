@@ -99,7 +99,6 @@
   align-items: center;
   justify-content: space-between;
   color: '#e1e1e1';
-  background-color: #1f1c1f;
 }
 
 .timer {
@@ -147,6 +146,7 @@
   display: flex;
   flex-direction: column;
   gap: 15px;
+  height: 117%;
 }
 
 .sendMessage {
@@ -269,4 +269,8 @@
 
 .opponentMove p {
   margin-left: 15px;
+}
+
+.chat {
+  margin-top: 40xp;
 }

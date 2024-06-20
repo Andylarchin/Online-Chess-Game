@@ -123,9 +123,11 @@ input::placeholder {
 
 .imageStats {
   display: flex;
-  gap: 9%;
-  margin-left: 55px;
+  gap: 5%;
+  margin-left: 72px;
   margin-top: 30px;
+  flex-direction: column;
+  height: 100%;
 }
 
 .userInformation {
@@ -140,11 +142,15 @@ input::placeholder {
 }
 
 .playButton {
+  gap: 5px;
   width: 150px;
   border-radius: 50px;
   background-color: #81b34a;
   color: white;
   margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .sideBar {
@@ -243,4 +249,26 @@ input::placeholder {
   gap: 15px;
   justify-content: center;
   align-items: center;
+}
+
+.boardArguments {
+  list-style-type: none;
+  color: #222222;
+  font-weight: 700;
+  display: flex;
+  gap: 8%;
+}
+
+.gameLobbyBoard {
+  width: 80%;
+  height: 12%;
+  background: #222222;
+  display: flex;
+  align-items: center;
+  color: #e1e1e1;
+  gap: 7%;
+}
+
+.chat {
+  margin-top: 40px;
 }
