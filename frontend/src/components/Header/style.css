@@ -1,18 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-body {
-  font-family: 'Poppins', sans-serif;
-  font-weight: 400;
-  font-style: normal;
-}
-
 .plainLogo {
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
+  border: 3px solid #5ced73;
 }
 
 .gameLogo {
@@ -41,16 +31,12 @@ body {
   margin-top: 30px;
 }
 
-body {
-  background-color: #302e2b;
-  font-family: 'Inter';
-}
-
 .game-buttons-container {
   display: flex;
   gap: 20px;
   flex-direction: column;
   cursor: pointer;
+  background-color: #262522;
 }
 
 .gameButton {
@@ -71,6 +57,7 @@ body {
   width: 100%;
   height: 100%;
   display: flex;
+  background-color: #262522;
 }
 
 .imagePanel img {
@@ -85,6 +72,7 @@ body {
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  background-color: #262522;
 }
 
 .statsPanel {
@@ -135,7 +123,124 @@ input::placeholder {
 
 .imageStats {
   display: flex;
-  gap: 75px;
+  gap: 9%;
   margin-left: 55px;
   margin-top: 30px;
+}
+
+.userInformation {
+  background-color: #515151;
+  width: 120%;
+  height: 120%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15px;
+  color: #e1e1e1;
+}
+
+.playButton {
+  width: 150px;
+  border-radius: 50px;
+  background-color: #81b34a;
+  color: white;
+  margin: 0;
+}
+
+.sideBar {
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  cursor: pointer;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15px;
+  background: #222222;
+}
+
+.sideBar li {
+  color: white;
+  display: flex;
+  gap: 25px;
+}
+
+.sideBar li span {
+  font-size: 24px;
+}
+
+.sideBar li p {
+  margin-right: 45px;
+}
+
+.socialsIcons {
+  display: flex;
+  flex-direction: row;
+  color: white;
+  gap: 20px;
+  margin-top: 30px;
+  font-size: 20px;
+  list-style-type: none;
+  cursor: pointer;
+}
+
+.lastLine {
+  color: white;
+  margin-right: 35px;
+  margin-top: 40px;
+  cursor: pointer;
+}
+
+.searchBar input {
+  width: 100%;
+  padding-right: 40px;
+}
+
+.statsBlock {
+  width: 350px;
+  height: 300px;
+  background-color: #222222;
+  margin-left: 23px;
+  border-radius: 25px;
+  margin-top: 25px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+}
+
+.topStats {
+  display: flex;
+  color: white;
+  gap: 30px;
+  margin-top: 10px;
+  margin-left: 15px;
+}
+
+.topStats p {
+  background-color: #515151;
+  padding: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15px;
+  color: #e1e1e1;
+}
+
+.statsDiv {
+  color: #e1e1e1;
+  width: 90%;
+  height: 25px;
+  display: flex;
+  justify-content: space-between;
+  border-radius: 10px;
+  background: #515151;
+  align-items: center;
+  padding: 10px;
+}
+
+.gameStats {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  justify-content: center;
+  align-items: center;
 }

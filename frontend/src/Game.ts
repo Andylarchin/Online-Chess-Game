@@ -3,7 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 
 const chess: Chess = new Chess();
 
-export const gameSubject = new BehaviorSubject();
+export const gameSubject = new BehaviorSubject<void>(undefined);
 
 export const handleMove = (from, to) => {
   const promotions = chess.moves({ verbose: true }).filter((m) => m.promotion);
@@ -12,16 +12,17 @@ export const handleMove = (from, to) => {
     const pendingPromotion = { from, to, color: promotions[0].color };
     updateGame(pendingPromotion);
   }
+
   const { pendingPromotion } = gameSubject.getValue();
 
   if (!pendingPromotion) {
-    move(from, to);
+    move(from, to, promotions);
   }
 };
 
 export const resetGame = () => {
   chess.reset();
-  updateGame();
+  updateGame(gameSubject.getValue());
 };
 
 const updateGame = (pendingPromotion) => {

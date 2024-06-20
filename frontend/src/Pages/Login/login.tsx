@@ -3,6 +3,7 @@ import './style.css';
 import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
+import { CloseCircleOutlined } from '@ant-design/icons';
 
 type Call = {};
 
@@ -34,7 +35,7 @@ const Login = () => {
       >
         <h3>Welcome back!</h3>
 
-        <label for='username'>Email Adress</label>
+        <label htmlFor='username'>Email Adress</label>
         <input
           {...register('username', {
             required: true,
@@ -49,10 +50,13 @@ const Login = () => {
           id='username'
         />
         {errors.username && (
-          <p>{'Entered email should be of valid email format!'}</p>
+          <p>
+            <CloseCircleOutlined />
+            {'    Email should be of valid format!'}
+          </p>
         )}
 
-        <label for='password'>Password</label>
+        <label htmlFor='password'>Password</label>
         <input
           {...register('password', {
             required: true,
@@ -66,7 +70,12 @@ const Login = () => {
           id='password'
         />
 
-        {errors.password && <p>{'Password must have at least 8 characters'}</p>}
+        {errors.password && (
+          <p>
+            <CloseCircleOutlined twoToneColor='#eb2f96' />
+            {'    Password must have at least 8 characters!'}
+          </p>
+        )}
 
         <button type='submit'>Log In</button>
         <div className='social'>

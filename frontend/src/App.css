@@ -4,13 +4,18 @@
 @tailwind utilities;
 
 html,
+body {
+  height: 100%;
+  width: 100%;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+html,
 body,
 #app,
 #app,
 #root {
   height: 100%;
-  width: 100%;
-  font-family: 'Poppins', sans-serif;
-  font-weight: 600;
-  font-style: normal;
 }

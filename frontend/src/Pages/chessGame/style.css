@@ -14,8 +14,8 @@
   min-height: 100%;
   display: flex;
   align-items: center;
-  justify-content: center;
-  background-color: #302e2b;
+  background-color: #161616;
+  justify-content: space-around;
 }
 
 .board-container {
@@ -75,4 +75,198 @@
   background-color: rgb(63, 63, 63);
   border: 2px solid white;
   border-radius: 10px;
+}
+
+.chatContainer {
+  height: 600px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.movesContainer {
+  height: 600px;
+  width: 350px;
+  background: #1f1c1f;
+}
+
+.opponentName {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 7%;
+  align-items: center;
+  justify-content: space-between;
+  color: '#e1e1e1';
+  background-color: #1f1c1f;
+}
+
+.timer {
+  width: 50%;
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  align-items: center;
+  height: 50px;
+  background: #1f1c1f;
+  color: #e1e1e1;
+  font-size: 32px;
+  justify-content: space-evenly;
+  font-weight: 700;
+}
+
+.firstHalf {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #1f1c1f;
+  color: #e1e1e1;
+  height: 38px;
+}
+
+.secondHalf {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #e1e1e1;
+  background: #222222;
+}
+
+.topChat {
+  display: flex;
+  flex-direction: row;
+}
+
+.actualChat {
+  color: #e1e1e1;
+  background: #1f1c1f;
+  font-size: 13px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.sendMessage {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  margin-top: 10px;
+}
+
+.chatLog {
+  display: flex;
+  flex-direction: row;
+  color: #e1e1e1;
+  background: #1f1c1f;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.sendButton {
+  background: #6c9d40;
+  color: #e1e1e1;
+  width: 90px;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+}
+
+.message {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 15px;
+}
+
+.gameChoice {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  margin-top: 20px;
+  gap: 15px;
+}
+
+.choiceButton {
+  width: 100px;
+  height: 30px;
+  background: #1f1c1f;
+  color: #e1e1e1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+}
+
+.choiceButton2 {
+  width: 150px;
+  height: 30px;
+  background: #1f1c1f;
+  color: #e1e1e1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  gap: 10px;
+}
+
+.opponentName2 {
+  margin-top: 30px;
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  color: '#e1e1e1';
+  background-color: #1f1c1f;
+}
+
+.secondUser {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.gameType {
+  color: grey;
+  margin-top: 30px;
+  margin-left: 10px;
+  font-size: 12px;
+}
+
+.ownMove {
+  width: 100%;
+  height: 40px;
+  display: flex;
+  color: white;
+  flex-direction: row;
+  gap: 30px;
+  /* margin-top: 15px; */
+  background: #161616;
+  align-items: center;
+}
+
+.ownMove p {
+  margin-left: 15px;
+}
+
+.opponentMove {
+  width: 100%;
+  height: 40px;
+  display: flex;
+  color: white;
+  flex-direction: row;
+  gap: 30px;
+  align-items: center;
+}
+
+.opponentMove p {
+  margin-left: 15px;
 }
