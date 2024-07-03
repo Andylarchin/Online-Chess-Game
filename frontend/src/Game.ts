@@ -1,37 +1,62 @@
-import { Chess } from 'chess.js';
-import { Form } from 'react-router-dom';
-import { BehaviorSubject, toArray } from 'rxjs';
+import { Chess, Move as ChessMove } from 'chess.js';
+import { BehaviorSubject } from 'rxjs';
 
-const chess: Chess = new Chess();
+const chess = new Chess();
 
-export const gameSubject = new BehaviorSubject<void>(undefined);
+interface Game {
+  board: Array<Array<{ type: string; color: string } | null>>;
+  pendingPromotion?: Promotion | null;
+  isGameOver: boolean;
+  turn: 'w' | 'b';
+  result: string | null;
+}
 
-export const handleMove = (from, to) => {
-  const promotions = chess.moves({ verbose: true }).filter((m) => m.promotion);
+interface Promotion {
+  from: string;
+  to: string;
+  color: 'w' | 'b';
+}
+
+interface Moves {
+  fromMove: { from: string };
+  toMove: { to: string };
+}
+
+export const gameSubject = new BehaviorSubject<Game | undefined>(undefined);
+
+export const handleMove = (from: string, to: string): void => {
+  const promotions = chess
+    .moves({ verbose: true })
+    .filter((m: ChessMove) => m.promotion);
   console.log(promotions);
-  if (promotions.some((p) => `${p.from}:${p.to}` === `${from}:${to}`)) {
-    const pendingPromotion = { from, to, color: promotions[0].color };
+  if (
+    promotions.some((p: ChessMove) => `${p.from}:${p.to}` === `${from}:${to}`)
+  ) {
+    const pendingPromotion: Promotion = {
+      from,
+      to,
+      color: promotions[0].color,
+    };
     updateGame(pendingPromotion);
   }
 
-  const { pendingPromotion } = gameSubject.getValue();
-
-  if (!pendingPromotion) {
-    move(from, to, promotions);
+  const game = gameSubject.getValue();
+  if (game && !game.pendingPromotion) {
+    move(from, to);
   }
 };
 
-export const resetGame = () => {
+export const resetGame = (): void => {
   chess.reset();
-  updateGame(gameSubject.getValue());
+  updateGame();
 };
 
-const updateGame = (pendingPromotion) => {
+const updateGame = (pendingPromotion?: Promotion | null): void => {
   const isGameOver = chess.isGameOver();
 
-  const newGame = {
+  const newGame: Game = {
     board: chess.board(),
-    pendingPromotion,
+    pendingPromotion: pendingPromotion || null,
     isGameOver,
     turn: chess.turn(),
     result: isGameOver ? getGameResult() : null,
@@ -39,7 +64,7 @@ const updateGame = (pendingPromotion) => {
   gameSubject.next(newGame);
 };
 
-const getGameResult = () => {
+const getGameResult = (): string => {
   if (chess.isCheckmate()) {
     const winner = chess.turn() === 'w' ? 'BLACK' : 'WHITE';
     return `CHECKMATE - WINNER  - ${winner}`;
@@ -58,19 +83,16 @@ const getGameResult = () => {
   }
 };
 
-export const initGame = () => {
-  updateGame();
+export const initGame = (): void => {
   chess.reset();
+  updateGame();
 };
 
-let fromMove;
-let toMove;
+let fromMove: { from: string };
+let toMove: { to: string };
 
-export const move = (from, to, promotion) => {
-  let tempMove = { from, to };
-  if (promotion) {
-    tempMove.promotion = promotion;
-  }
+export const move = (from: string, to: string, promotion?: string): void => {
+  const tempMove = { from, to, promotion };
 
   const legalMove = chess.move(tempMove);
   if (legalMove) {
@@ -81,7 +103,6 @@ export const move = (from, to, promotion) => {
   toMove = { to };
 };
 
-export const getMoves = (count) => {
-  const moves = { fromMove, toMove };
-  return moves;
+export const getMoves = (): Moves => {
+  return { fromMove, toMove };
 };

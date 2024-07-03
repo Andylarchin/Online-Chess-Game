@@ -22,6 +22,7 @@ const Login = () => {
         <div className='shape'></div>
       </div>
       <form
+        id='theForm'
         onSubmit={handleSubmit((data) => {
           console.log(data);
           Swal.fire(
