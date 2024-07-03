@@ -1,5 +1,6 @@
 import { Chess } from 'chess.js';
-import { BehaviorSubject } from 'rxjs';
+import { Form } from 'react-router-dom';
+import { BehaviorSubject, toArray } from 'rxjs';
 
 const chess: Chess = new Chess();
 
@@ -62,6 +63,9 @@ export const initGame = () => {
   chess.reset();
 };
 
+let fromMove;
+let toMove;
+
 export const move = (from, to, promotion) => {
   let tempMove = { from, to };
   if (promotion) {
@@ -72,4 +76,12 @@ export const move = (from, to, promotion) => {
   if (legalMove) {
     updateGame();
   }
+
+  fromMove = { from };
+  toMove = { to };
+};
+
+export const getMoves = (count) => {
+  const moves = { fromMove, toMove };
+  return moves;
 };

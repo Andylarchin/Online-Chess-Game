@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { gameSubject, initGame, resetGame } from '../../Game';
+import { gameSubject, initGame, resetGame, getMoves } from '../../Game';
 import './style.css';
 import BoardSquare from '../../components/BoardSquare/BoardSquare';
 import {
@@ -21,8 +21,10 @@ const ChessGame = () => {
   const [board, setBoard] = useState([]);
   const [isGameOver, setIsGameOver] = useState();
   const [result, setResult] = useState();
-  const [turn, setTurn] = useState();
+  const [turn, setTurn] = useState('static');
   const [currentBoard, setCurrentBoard] = useState([]);
+  const [movesCount, setMovesCount] = useState(0);
+  const [movesList, setMovesList] = useState([]);
 
   useEffect(() => {
     initGame();
@@ -34,6 +36,17 @@ const ChessGame = () => {
     });
     return () => subscribe.unsubscribe();
   }, []);
+
+  useEffect(() => {
+    const movesData = getMoves();
+    setMovesList((movesList) => [...movesList, movesData]);
+
+    console.log(movesList);
+
+    if (isGameOver) {
+      setMovesList([]);
+    }
+  }, [turn, isGameOver]);
 
   useEffect(() => {
     setCurrentBoard(turn === 'w' ? board.flat() : board.flat().reverse());
@@ -76,38 +89,27 @@ const ChessGame = () => {
             Italian Game - Rouseeau Gabmit
           </p>
           <div className='movesList'>
-            <div className='ownMove' style={{ marginTop: '15px' }}>
-              <p>1.</p>
-              <p>e4</p>
-              <p>e5</p>
-            </div>
-            <div className='opponentMove'>
-              <p>2.</p>
-              <p>Nf3</p>
-              <p>Nc6</p>
-            </div>
-
-            <div className='ownMove'>
-              <p>3.</p>
-              <p>Bc4</p>
-              <p>f5</p>
-            </div>
-            <div className='opponentMove'>
-              <p>4.</p>
-              <p>c3</p>
-              <p>fxe4</p>
-            </div>
-
-            <div className='ownMove'>
-              <p>5.</p>
-              <p>Ng1</p>
-              <p>d5</p>
-            </div>
-            <div className='opponentMove'>
-              <p>6.</p>
-              <p>Bb3</p>
-              <p>Nf6</p>
-            </div>
+            {movesList
+              .filter((item) => item.fromMove !== undefined)
+              .map((move, i) => {
+                if (i % 2 === 0) {
+                  return (
+                    <div className='opponentMove'>
+                      <p>{`${i + 1}.`}</p>
+                      <p>{move.fromMove.from}</p>
+                      <p>{move.toMove.to}</p>
+                    </div>
+                  );
+                } else {
+                  return (
+                    <div className='ownMove'>
+                      <p>{`${i + 1}.`}</p>
+                      <p>{move.fromMove.from}</p>
+                      <p>{move.toMove.to}</p>
+                    </div>
+                  );
+                }
+              })}
           </div>
         </div>
         {isGameOver && (
