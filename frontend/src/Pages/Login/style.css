@@ -38,7 +38,7 @@ body {
   bottom: -80px;
 }
 
-#theForm {
+.containerForm {
   min-height: 520px;
   width: 400px;
   background-color: rgba(255, 255, 255, 0.13);
@@ -54,7 +54,7 @@ body {
   color: white;
 }
 
-#theForm * {
+form * {
   font-family: 'Poppins', sans-serif;
   color: #ffffff;
   letter-spacing: 0.5px;
@@ -62,7 +62,7 @@ body {
   border: none;
 }
 
-#theForm h3 {
+.containerForm h3 {
   font-size: 32px;
   font-weight: 500;
   line-height: 42px;
@@ -76,7 +76,7 @@ label {
   font-weight: 500;
 }
 
-.input {
+.theInput {
   display: block;
   height: 50px;
   width: 100%;
@@ -89,7 +89,7 @@ label {
   color: white;
 }
 
-::placeholder {
+.theInput::placeholder {
   color: white;
 }
 

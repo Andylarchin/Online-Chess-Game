@@ -149,6 +149,10 @@
   height: 117%;
 }
 
+#messageInput::placeholder {
+  color: white;
+}
+
 .sendMessage {
   display: flex;
   flex-direction: row;

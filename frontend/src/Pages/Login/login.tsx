@@ -22,7 +22,7 @@ const Login = () => {
         <div className='shape'></div>
       </div>
       <form
-        id='theForm'
+        className='containerForm'
         onSubmit={handleSubmit((data) => {
           console.log(data);
           Swal.fire(
@@ -49,9 +49,10 @@ const Login = () => {
           type='text'
           placeholder='Email or Phone'
           id='username'
+          className='theInput'
         />
         {errors.username && (
-          <p>
+          <p style={{ color: 'red' }}>
             <CloseCircleOutlined />
             {'    Email should be of valid format!'}
           </p>
@@ -69,11 +70,12 @@ const Login = () => {
           type='password'
           placeholder='Password'
           id='password'
+          className='theInput'
         />
 
         {errors.password && (
-          <p>
-            <CloseCircleOutlined twoToneColor='#eb2f96' />
+          <p style={{ color: 'red' }}>
+            <CloseCircleOutlined style={{ fill: 'red' }} />
             {'    Password must have at least 8 characters!'}
           </p>
         )}
