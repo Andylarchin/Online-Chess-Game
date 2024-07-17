@@ -1,0 +1,19 @@
+version: '3.5'
+
+services:
+  chess-database:
+    image: mongo:latest
+    container_name: chess-database
+    restart: unless-stopped
+    command: mongod
+    ports:
+      - 59031:27017
+    volumes:
+      - ./docker-entrypoint-initdb:/docker-entrypoint-initdb.d
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: 'chess'
+      MONGO_INITDB_ROOT_PASSWORD: 'chess'
+      MONGO_INITDB_DATABASE: 'chess'
+      MONGO_DB_DATABASE: 'chess'
+      MONGO_DB_USERNAME: 'chess'
+      MONGO_DB_PASSWORD: 'chess'
