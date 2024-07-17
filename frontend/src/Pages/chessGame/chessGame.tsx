@@ -75,13 +75,12 @@ const ChessGame: React.FC = () => {
   }, [turn, isGameOver]);
 
   useEffect(() => {
-    setCurrentBoard(turn === 'w' ? board.flat() : board.flat().reverse());
+    setCurrentBoard(turn === 'w' ? board.flat() : board.flat());
   }, [board, turn]);
 
   const getXYPosition = (i: number): { x: number; y: number } => {
-    const x = turn === 'w' ? i % 8 : Math.abs((i % 8) - 7);
-    const y =
-      turn === 'w' ? Math.abs(Math.floor(i / 8) - 7) : Math.floor(i / 8);
+    const x = i % 8;
+    const y = Math.abs(Math.floor(i / 8) - 7);
     return { x, y };
   };
 
@@ -156,7 +155,7 @@ const ChessGame: React.FC = () => {
         )}
         <div className='board-container'>
           <div className='board'>
-            {currentBoard.map((piece, i) => {
+            {board.flat().map((piece, i) => {
               return (
                 <div key={i} className='square'>
                   <BoardSquare

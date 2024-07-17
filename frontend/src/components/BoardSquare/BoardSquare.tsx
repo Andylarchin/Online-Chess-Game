@@ -3,14 +3,21 @@ import Square from './Square/Square';
 import Piece from './Piece';
 import { useDrop } from 'react-dnd';
 import { handleMove } from '../../Game';
-import { gameSubject } from '../../Game';
+import { gameSubject, PendingPromotion } from '../../Game';
 import Promote from '../Promote';
 
-const BoardSquare = ({ piece, black, position }) => {
-  const [promotion, setPromotion] = useState(null);
+interface BoardSquareProps {
+  piece: string | null;
+  black: boolean;
+  position: string;
+}
+
+const BoardSquare: React.FC<BoardSquareProps> = ({ piece, black, position }) => {
+  const [promotion, setPromotion] = useState<PendingPromotion | null>(null);
+
   const [, drop] = useDrop({
     accept: 'piece',
-    drop: (item) => {
+    drop: (item: { id: string }) => {
       const [fromPosition] = item.id.split('_');
       handleMove(fromPosition, position);
     },
