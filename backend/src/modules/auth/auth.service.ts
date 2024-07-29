@@ -1,70 +1,47 @@
-import {
-  ConflictException,
-  Injectable,
-  NotFoundException,
-  UnauthorizedException,
-} from '@nestjs/common';
-import { AuthPayloadDto } from './dto/auth.dto';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
-import { Auth } from './schemes/auth.schema';
+import { UserService } from '../user/user.service';
+import { AuthPayloadDto } from './dto/auth.dto';
 import { createUserDto } from './dto/createUser.dto';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthService {
   constructor(
+    private userService: UserService,
     private jwtService: JwtService,
-    @InjectModel(Auth.name) private authModel: Model<Auth>,
   ) {}
 
-  async create(createUserDto: createUserDto): Promise<Auth> {
-    const findUser = await this.authModel
-      .findOne({ username: createUserDto.username })
-      .exec();
-
-    if (findUser) {
-      throw new ConflictException('User with this username already exists.');
-    } else {
-      const createdUser = new this.authModel(createUserDto);
-      return createdUser.save();
-    }
+  async create(createUserDto: createUserDto): Promise<void> {
+    createUserDto.password = await bcrypt.hash(createUserDto.password, 10);
+    await this.userService.create(createUserDto);
   }
 
   async validateUser({ username, password }: AuthPayloadDto) {
-    const findUser = await this.authModel.findOne({ username }).exec();
-    if (!findUser) return null;
-    const isMatch = await bcrypt.compare(password, findUser.password);
+    const user = await this.userService.findByUsername(username);
+    if (!user) return null;
+    const isMatch = await bcrypt.compare(password, user.password);
     if (isMatch) {
       return this.jwtService.sign({
-        _id: findUser._id,
-        username: findUser.username,
+        _id: user._id,
+        username: user.username,
       });
+    } else {
+      throw new UnauthorizedException('Invalid credentials');
     }
   }
 
-  async changePassword(
-    oldPassword: string,
-    newPassword: string,
-    username: string,
-  ) {
-    const findUser = await this.authModel
-      .findOne({ username: username })
-      .exec();
-
-    console.log(username, oldPassword, newPassword, findUser);
-    if (!findUser) {
-      throw new NotFoundException('User not found');
+  async changePassword(oldPassword: string, newPassword: string, username: string): Promise<void> {
+    const user = await this.userService.findByUsername(username);
+    if (!user) {
+      throw new UnauthorizedException('User not found');
     }
 
-    const passwordMatch = await bcrypt.compare(oldPassword, findUser.password);
+    const passwordMatch = await bcrypt.compare(oldPassword, user.password);
     if (!passwordMatch) {
       throw new UnauthorizedException('Wrong credentials');
     }
 
-    const newHashedPassword = await bcrypt.hash(newPassword, 10);
-    findUser.password = newHashedPassword;
-    await findUser.save();
+    await this.userService.updatePassword(username, newPassword);
   }
 }

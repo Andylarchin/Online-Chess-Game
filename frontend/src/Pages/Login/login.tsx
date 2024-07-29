@@ -1,11 +1,15 @@
 import React from 'react';
-import './style.css';
 import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios'; 
+import './style.css';
 import { CloseCircleOutlined } from '@ant-design/icons';
 
-type Call = {};
+interface authCredentials {
+  username: string;
+  password: string;
+}
 
 const Login = () => {
   const {
@@ -15,36 +19,37 @@ const Login = () => {
   } = useForm();
   const navigate = useNavigate();
 
+  const onSubmit = async (data: authCredentials) => {
+    try {
+      console.log(data)
+      const response = await axios.post('http://localhost:3000/auth/login', data);
+      const { token } = response.data;
+      localStorage.setItem('token', token);
+      Swal.fire('Good job!', 'You are being logged in!', 'success').then(() => {
+        navigate('/home');
+      });
+    } catch (error) {
+      Swal.fire('Oops...', 'Invalid credentials', 'error');
+    }
+  };
+
   return (
     <>
       <div className='background'>
         <div className='shape'></div>
         <div className='shape'></div>
       </div>
-      <form
-        className='containerForm'
-        onSubmit={handleSubmit((data) => {
-          console.log(data);
-          Swal.fire(
-            `${'Good job!'}`,
-            `${'You are being logged in!'}`,
-            'success'
-          ).then(() => {
-            navigate('/home');
-          });
-        })}
-      >
+      <form className='containerForm' onSubmit={handleSubmit(onSubmit)}>
         <h3>Welcome back!</h3>
 
-        <label htmlFor='username'>Email Adress</label>
+        <label htmlFor='username'>Email Address</label>
         <input
           {...register('username', {
             required: true,
-            pattern: {
-              value:
-                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-              message: 'Please enter a valid email',
-            },
+            // pattern: {
+            //   value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+            //   message: 'Please enter a valid email',
+            // },
           })}
           type='text'
           placeholder='Email or Phone'

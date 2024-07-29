@@ -2,49 +2,49 @@ import {
   Controller,
   Post,
   Body,
-  HttpException,
   UseGuards,
   UnauthorizedException,
   Put,
+  BadRequestException,
 } from '@nestjs/common';
 import { AuthPayloadDto } from './dto/auth.dto';
 import { AuthService } from './auth.service';
-import { LocalGuard } from './guards/local.guards';
 import { createUserDto } from './dto/createUser.dto';
-import * as bcrypt from 'bcrypt';
 import { ChangePasswordDto } from './dto/changePassword.dto';
+import { JwtAuthGuard } from './guards/local.guards';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(private readonly authService: AuthService) {}
 
   @Post('register')
-  async register(@Body() createUserDto) {
-    const saltOrRounds = 10;
-    const hash = await bcrypt.hash(createUserDto.password, saltOrRounds);
-    console.log(hash);
-    const data = this.authService.create({
-      username: createUserDto.username,
-      password: hash,
-    });
-    return data;
+  async register(@Body() createUserDto: createUserDto) {
+    try {
+      await this.authService.create(createUserDto);
+      return { message: 'User registered successfully' };
+    } catch (error) {
+      throw new BadRequestException(error.message);
+    }
   }
 
   @Post('login')
-  @UseGuards(LocalGuard)
-  login(@Body() authPayload: AuthPayloadDto) {
-    const user = this.authService.validateUser(authPayload);
+  async login(@Body() authPayload: AuthPayloadDto) {
+    const accessToken = await this.authService.validateUser(authPayload);
 
-    if (!user) throw new UnauthorizedException('Invalid Credentials');
-    return user;
+    if (!accessToken) {
+      throw new UnauthorizedException('Invalid Credentials');
+    }
+    return { access_token: accessToken };
   }
 
-  @Put('/change')
+  @Put('/change-password')
+  @UseGuards(JwtAuthGuard)
   async changePassword(@Body() changePasswordDto: ChangePasswordDto) {
-    return this.authService.changePassword(
+    await this.authService.changePassword(
       changePasswordDto.oldPassword,
       changePasswordDto.newPassword,
       changePasswordDto.username,
     );
+    return { message: 'Password changed successfully' };
   }
 }

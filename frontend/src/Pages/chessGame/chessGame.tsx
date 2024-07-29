@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { gameSubject, initGame, resetGame, getMoves } from '../../Game';
+import io from 'socket.io-client';
 import './style.css';
 import BoardSquare from '../../components/BoardSquare/BoardSquare';
 import {
@@ -34,6 +35,8 @@ interface Message {
   message: string;
 }
 
+const SOCKET_SERVER_URL = 'http://localhost:3000'; 
+
 const ChessGame: React.FC = () => {
   const [board, setBoard] = useState<string[][]>([]);
   const [isGameOver, setIsGameOver] = useState<boolean>(false);
@@ -43,6 +46,7 @@ const ChessGame: React.FC = () => {
   const [movesCount, setMovesCount] = useState<number>(0);
   const [movesList, setMovesList] = useState<Move[]>([]);
   const [message, setMessage] = useState<Message[]>([]);
+  const socket = useRef<SocketIOClient.Socket | null>(null);
 
   const {
     register,
@@ -78,6 +82,18 @@ const ChessGame: React.FC = () => {
     setCurrentBoard(turn === 'w' ? board.flat() : board.flat());
   }, [board, turn]);
 
+  useEffect(() => {
+    socket.current = io(SOCKET_SERVER_URL);
+
+    socket.current.on('message', (message: Message) => {
+      setMessage((prevMessages) => [...prevMessages, message]);
+    });
+
+    return () => {
+      socket.current?.disconnect();
+    };
+  }, []);
+
   const getXYPosition = (i: number): { x: number; y: number } => {
     const x = i % 8;
     const y = Math.abs(Math.floor(i / 8) - 7);
@@ -96,9 +112,13 @@ const ChessGame: React.FC = () => {
   };
 
   const onSubmit: SubmitHandler<Message> = (data) => {
-    setMessage((message) => [...message, data]);
+    if (socket.current) {
+      socket.current.emit('sendMessage', data);
+    }
+    setMessage((messages) => [...messages, data]);
     console.log(data);
     (document.getElementById('messageInput') as HTMLInputElement).value = '';
+    (document.getElementById('sendButton') as HTMLButtonElement).disabled = true;
   };
 
   return (
@@ -117,7 +137,7 @@ const ChessGame: React.FC = () => {
           </div>
           <p className='gameType'>
             <BookOutlined />
-            Italian Game - Rouseeau Gabmit
+            Italian Game - Rouseeau Gambit
           </p>
           <div className='movesList'>
             {movesList
