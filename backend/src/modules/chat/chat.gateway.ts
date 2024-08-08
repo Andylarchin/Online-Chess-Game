@@ -21,4 +21,10 @@ export class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
   handleMessage(@MessageBody() message: string): void {
     this.server.emit('message', message);
   }
+
+  @SubscribeMessage('move')
+  handleMove(@MessageBody() move: { from: string, to: string }): void {
+    console.log('Move received:', move);
+    this.server.emit('move', move);
+  }
 }

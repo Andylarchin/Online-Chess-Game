@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { gameSubject, initGame, resetGame, getMoves } from '../../Game';
+import { gameSubject, initGame, resetGame, getMoves, handleMove } from '../../Game';
 import io from 'socket.io-client';
 import './style.css';
 import BoardSquare from '../../components/BoardSquare/BoardSquare';
@@ -18,12 +18,20 @@ import {
   BookOutlined,
 } from '@ant-design/icons';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { Piece } from 'chess.js';
+
+interface PendingPromotion {
+  from: string;
+  to: string;
+  piece: Piece;
+}
 
 interface Game {
-  board: string[][];
+  board: (Piece | null)[][];
   isGameOver: boolean;
   result: string | null;
   turn: 'w' | 'b';
+  pendingPromotion: PendingPromotion | null;
 }
 
 interface Move {
@@ -66,6 +74,7 @@ const ChessGame: React.FC = () => {
     });
     return () => subscribe.unsubscribe();
   }, []);
+  
 
   useEffect(() => {
     const movesData = getMoves();
@@ -88,6 +97,12 @@ const ChessGame: React.FC = () => {
     socket.current.on('message', (message: Message) => {
       setMessage((prevMessages) => [...prevMessages, message]);
     });
+    
+    socket.current.on('move', (move) => {
+      console.log('Move event received:', move);
+      handleMove(move.from, move.to); 
+    });
+
 
     return () => {
       socket.current?.disconnect();
@@ -182,6 +197,7 @@ const ChessGame: React.FC = () => {
                     piece={piece}
                     black={isBlack(i)}
                     position={getPosition(i)}
+                    socket={socket.current}
                   />
                 </div>
               );

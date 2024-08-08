@@ -10,16 +10,26 @@ interface BoardSquareProps {
   piece: string | null;
   black: boolean;
   position: string;
+  socket: SocketIOClient.Socket | null;  
 }
 
-const BoardSquare: React.FC<BoardSquareProps> = ({ piece, black, position }) => {
+const BoardSquare: React.FC<BoardSquareProps> = ({ piece, black, position, socket }) => {
   const [promotion, setPromotion] = useState<PendingPromotion | null>(null);
 
   const [, drop] = useDrop({
     accept: 'piece',
     drop: (item: { id: string }) => {
       const [fromPosition] = item.id.split('_');
+      console.log('Handling move from', fromPosition, 'to', position);
+      
       handleMove(fromPosition, position);
+
+      if (socket) {
+        console.log('Emitting move to socket:', { from: fromPosition, to: position });
+        socket.emit('move', { from: fromPosition, to: position });
+      } else {
+        console.error('Socket not available');
+      }
     },
   });
 

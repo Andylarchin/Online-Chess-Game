@@ -91,12 +91,16 @@ export const initGame = (): void => {
 let fromMove: { from: string };
 let toMove: { to: string };
 
-export const move = (from: string, to: string, promotion?: string): void => {
+export const move = (from: string, to: string, promotion?: string, socket?: SocketIOClient.Socket): void => {
   const tempMove = { from, to, promotion };
 
   const legalMove = chess.move(tempMove);
   if (legalMove) {
     updateGame();
+
+    if (socket) {
+      socket.emit('move', { from, to });
+    }
   }
 
   fromMove = { from };
