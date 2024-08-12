@@ -16,11 +16,11 @@ export class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
   handleDisconnect(client: Socket) {
     console.log('Client disconnected: ', client.id);
   }
-
-  @SubscribeMessage('sendMessage')
-  handleMessage(@MessageBody() message: string): void {
-    this.server.emit('message', message);
-  }
+ 
+  @SubscribeMessage('chat message')
+handleMessage(@MessageBody() message: string): void {
+  this.server.emit('chat message', message);
+}
 
   @SubscribeMessage('move')
   handleMove(@MessageBody() move: { from: string, to: string }): void {

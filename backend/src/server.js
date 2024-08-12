@@ -12,9 +12,11 @@ io.on('connection', (socket) => {
   console.log('New client connected');
 
   socket.on('chat message', (message) => {
-    io.emit('chat message', message); 
+    console.log('Received chat message on server:', message);
+    io.emit('chat message', message);
+    console.log('Message broadcasted');
   });
-
+  
   socket.on('move', ({ from, to }) => {
     io.emit('move', { from, to });
   });

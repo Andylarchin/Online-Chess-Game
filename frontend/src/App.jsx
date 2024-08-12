@@ -6,6 +6,7 @@ import ChessGame from './Pages/chessGame/chessGame';
 
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import Register from './Pages/Register/register';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
             <Route exact path='/' Component={Login} />
             <Route exact path='/home' Component={Lobby} />
             <Route exact path='/main' Component={ChessGame} />
+            <Route exact path='/register' Component={Register} />
           </Routes>
         </Router>
       </DndProvider>

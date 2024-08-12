@@ -94,15 +94,15 @@ const ChessGame: React.FC = () => {
   useEffect(() => {
     socket.current = io(SOCKET_SERVER_URL);
 
-    socket.current.on('message', (message: Message) => {
-      setMessage((prevMessages) => [...prevMessages, message]);
-    });
-    
     socket.current.on('move', (move) => {
       console.log('Move event received:', move);
       handleMove(move.from, move.to); 
     });
 
+    socket.current.on('chat message', (message) => {
+      console.log('Received chat message:', message); // Debug log
+      setMessage((prevMessages) => [...prevMessages, message]); // Ensure this runs only once per event
+    });
 
     return () => {
       socket.current?.disconnect();
@@ -127,13 +127,11 @@ const ChessGame: React.FC = () => {
   };
 
   const onSubmit: SubmitHandler<Message> = (data) => {
+    console.log(data)
     if (socket.current) {
-      socket.current.emit('sendMessage', data);
+      socket.current.emit('chat message', data);
     }
     setMessage((messages) => [...messages, data]);
-    console.log(data);
-    (document.getElementById('messageInput') as HTMLInputElement).value = '';
-    (document.getElementById('sendButton') as HTMLButtonElement).disabled = true;
   };
 
   return (
@@ -259,7 +257,7 @@ const ChessGame: React.FC = () => {
               {message.map((m, i) => {
                 if (i % 2 === 0) {
                   return (
-                    <div className='message' key={i}>
+                    <div className='message' key={`${i}-${m.message}`}>
                       <img
                         src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQS1P_ahGnzn0M0nsKJzASMplSBNbzh6528og&s'
                         style={{ width: '45px', height: '45px' }}
